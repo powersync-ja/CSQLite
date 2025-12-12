@@ -1,0 +1,4 @@
+module CSQLite3MultipleCiphers {
+	header "sqlite3.h"
+	export *
+}
