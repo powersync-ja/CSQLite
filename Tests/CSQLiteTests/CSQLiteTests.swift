@@ -7,7 +7,6 @@ let encryption = true
 let encryption = false
 #endif
 
-
 @Test func smoke_test() throws {
     var db: OpaquePointer?
     try #require(sqlite3_open_v2(":memory:", &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, nil) == SQLITE_OK)
