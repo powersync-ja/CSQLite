@@ -21,6 +21,10 @@ let package = Package(
             name: "CSQLite",
             targets: ["CSQLite"]
         ),
+        .library(
+            name: "CSQLite3MultipleCiphers",
+            targets: ["CSQLite3MultipleCiphers"],
+        ),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
