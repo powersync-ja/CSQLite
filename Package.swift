@@ -1,17 +1,7 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.1
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
-
-// Note: Keep in sync with https://github.com/powersync-ja/powersync-kotlin/blob/main/plugins/build-plugin/src/main/kotlin/com/powersync/compile/ClangCompile.kt
-let compileTimeOptions: [CSetting] = [
-    .define("HAVE_GETHOSTUUID", to: "0"),
-    .define("SQLITE_ENABLE_DBSTAT_VTAB"),
-    .define("SQLITE_ENABLE_FTS5"),
-    .define("SQLITE_ENABLE_SNAPSHOT"),
-    .define("SQLITE_ENABLE_SESSION"),
-    .define("SQLITE_ENABLE_PREUPDATE_HOOK")
-]
 
 let package = Package(
     name: "CSQLite",
@@ -21,24 +11,27 @@ let package = Package(
             name: "CSQLite",
             targets: ["CSQLite"]
         ),
-        .library(
-            name: "CSQLite3MultipleCiphers",
-            targets: ["CSQLite3MultipleCiphers"],
-        ),
+    ],
+    traits: [
+        .trait(name: "Encryption"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "CSQLite",
-            cSettings: compileTimeOptions,
-            linkerSettings: [
-                .linkedLibrary("m")
-            ]
-        ),
-        .target(
-            name: "CSQLite3MultipleCiphers",
-            cSettings: compileTimeOptions,
+            exclude: ["_sqlite", "_sqlite3mc"],
+            cSettings: [
+                // Note: Keep in sync with https://github.com/powersync-ja/powersync-kotlin/blob/main/plugins/build-plugin/src/main/kotlin/com/powersync/compile/ClangCompile.kt
+                .define("HAVE_GETHOSTUUID", to: "0"),
+                .define("SQLITE_ENABLE_DBSTAT_VTAB"),
+                .define("SQLITE_ENABLE_FTS5"),
+                .define("SQLITE_ENABLE_SNAPSHOT"),
+                .define("SQLITE_ENABLE_SESSION"),
+                .define("SQLITE_ENABLE_PREUPDATE_HOOK"),
+                
+                .define("USE_SQLITE3MC", .when(traits: ["Encryption"]))
+            ],
             linkerSettings: [
                 .linkedLibrary("m")
             ]
