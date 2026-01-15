@@ -2,7 +2,7 @@
 
 mkdir tmp
 cd tmp
-curl -o amalgamation.zip -L https://github.com/utelle/SQLite3MultipleCiphers/releases/download/v2.2.6/sqlite3mc-2.2.6-sqlite-3.51.1-amalgamation.zip
+curl -o amalgamation.zip -L https://github.com/utelle/SQLite3MultipleCiphers/releases/download/v2.2.7/sqlite3mc-2.2.7-sqlite-3.51.2-amalgamation.zip
 unzip amalgamation.zip
 
 mv sqlite3.h ../Sources/CSQLite/_sqlite/
